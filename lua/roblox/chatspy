@@ -1,0 +1,32 @@
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local StarterGui = game:GetService("StarterGui")
+local getmsg = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):FindFirstChild("OnMessageDoneFiltering")
+local function onChatted(p,msg)
+    msg = msg:gsub("[\n\r]",''):gsub("\t",' '):gsub("[ ]+",' ')
+    local hidden = true
+    local conn = getmsg.OnClientEvent:Connect(function(packet,channel)
+        if packet.SpeakerUserId==p.UserId and packet.Message==msg:sub(#msg-#packet.Message+1) and (channel=="All" or (channel=="Team" and Players[packet.FromSpeaker].Team==LocalPlayer.Team)) then
+            hidden = false
+        end
+    end)
+    wait(1)
+    conn:Disconnect()
+    StarterGui:SetCore("ChatMakeSystemMessage")
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    player.Chatted:Connect(function(msg) 
+        onChatted(player, msg) 
+    end)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    player.Chatted:Connect(function(msg) 
+        onChatted(player ,msg) 
+    end)
+end)
+
+StarterGui:SetCore("ChatMakeSystemMessage")
+local chatFrame = LocalPlayer.PlayerGui.Chat.Frame
+chatFrame.ChatChannelParentFrame.Visible = true
+chatFrame.ChatBarParentFrame.Position = chatFrame.ChatChannelParentFrame.Position+UDim2.new(UDim.new(),chatFrame.ChatChannelParentFrame.Size.Y)
