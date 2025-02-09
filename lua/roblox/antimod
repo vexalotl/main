@@ -1,0 +1,26 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+Players.PlayerAdded:Connect(function(player)
+    if player:IsInGroup(17215700) then
+        LocalPlayer:Kick("Mod Detected!\n\n"..player.Name.. " | "..player.DisplayName.." | "..player.UserId)
+    end
+    if player:IsInGroup(10604500) then
+        LocalPlayer:Kick("Verified Detected!\n\n"..player.Name.. " | "..player.DisplayName.." | "..player.UserId)
+    end
+    if player:IsInGroup(8068202) then
+        LocalPlayer:Kick("Star Detected!\n\n"..player.Name.. " | "..player.DisplayName.." | "..player.UserId)
+    end
+end)
+
+for _, player in Players:GetPlayers() do
+    if player:IsInGroup(17215700) then
+        LocalPlayer:Kick("Mod Detected!\n\n"..player.Name.. " | "..player.DisplayName.." | "..player.UserId)
+    end
+    if player:IsInGroup(10604500) then
+        LocalPlayer:Kick("Verified Detected!\n\n"..player.Name.. " | "..player.DisplayName.." | "..player.UserId)
+    end
+    if player:IsInGroup(8068202) then
+        LocalPlayer:Kick("Star Detected!\n\n"..player.Name.. " | "..player.DisplayName.." | "..player.UserId)
+    end
+end
