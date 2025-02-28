@@ -402,7 +402,9 @@ Players.PlayerAdded:Connect(function(player)
 end)
 
 Players.PlayerRemoving:Connect(function(player)
-    removeEsp(player)
+    pcall(function()
+        removeEsp(player)
+    end)
 end)
 
 RunService.RenderStepped:Connect(updateEsp)
